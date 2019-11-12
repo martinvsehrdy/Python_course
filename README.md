@@ -1060,43 +1060,34 @@ mainloop()
 ```
 ![SpinBox](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-16.png)
 
-### PannedWindow
-* **bg** to set he normal background color.
-* **bd** to set the size of border around the indicator.
-* **cursor** To appear the cursor when the mouse over the menubutton.
-* **width** to set the width of the widget.
-* **height** to set the height of the widget.
+### TreeView
 ```python
-from tkinter import *
-m1 = PanedWindow() 
-m1.pack(fill = BOTH, expand = 1) 
-left = Entry(m1, bd = 5) 
-m1.add(left) 
-m2 = PanedWindow(m1, orient = VERTICAL) 
-m1.add(m2) 
-top = Scale( m2, orient = HORIZONTAL) 
-m2.add(top) 
-mainloop()
+import tkinter as tk
+from tkinter import ttk
+master = tk.Tk()
+tree=ttk.Treeview(master)
+
+tree["columns"]=("one","two","three")
+tree.column("#0", width=270, minwidth=270, stretch=tk.NO)
+tree.column("one", width=150, minwidth=150, stretch=tk.NO)
+tree.column("two", width=400, minwidth=200)
+tree.column("three", width=80, minwidth=50, stretch=tk.NO)
+
+tree.heading("#0",text="Name",anchor=tk.W)
+tree.heading("one", text="Date modified",anchor=tk.W)
+tree.heading("two", text="Type",anchor=tk.W)
+tree.heading("three", text="Size",anchor=tk.W)
+
+# Level 1
+folder1=tree.insert("", 1, text="Folder 1", values=("23-Jun-17 11:05","File folder",""))
+tree.insert("", 2, text="text_file.txt", values=("23-Jun-17 11:25","TXT file","1 KB"))
+# Level 2
+tree.insert(folder1, "end", text="photo1.png", values=("23-Jun-17 11:28","PNG file","2.6 KB"))
+tree.insert(folder1, "end", text="photo2.png", values=("23-Jun-17 11:29","PNG file","3.2 KB"))
+tree.insert(folder1, "end", text="photo3.png", values=("23-Jun-17 11:30","PNG file","3.1 KB"))
 ```
-![PannedWindow](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-17.png)
+![TreeView](https://i.stack.imgur.com/2Mzp2.png)
 
-
-
-#### Menu
-```python
-from tkinter import Menu
-menu = Menu(parent)
-fileMenu = Menu(menu)
-fileMenu.add_command(label="Item")
-fileMenu.add_command(label="Exit", command=exit)
-menu.add_cascade(label="File", menu=fileMenu)
-```
-
-#### Label
-```python
-from tkinter import Label
-label = Label(parent, text="Tkinter", fg="red", font=("Helvetica", 18))
-```
 
 #### Example
 * clock like 10:40:27, changing each second
