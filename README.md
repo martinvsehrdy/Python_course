@@ -225,7 +225,7 @@ Lets have list of fruits: "plum", "apple", "pear", "apricot", "grape", "banana"
 
 
 #### Exercise
-Napiš funkci, která jako argument dostane řetězec a vrátí slovník, ve kterém budou jako klíče jednotlivé znaky ze zadaného řetězce a jako hodnoty počty výskytů těchto znaků v řetězci.
+Napiš funkci, která jako argument dostane řetězec a vrátí slovník, ve kterém budou jako klíče jednotlivé znaky ze zadaného řetězce a jako hodnoty počty výskytů těchto znaků v řetězci. A vypiš písmena podle počtu výskytů od největšího zastoupení v textu.
 
 #### Exceptions
 ```python
@@ -241,9 +241,9 @@ try:
 except ZeroDivisionError:
     print("division by zero!")
 else:
-    print("result is", result)
+    print("result is", result) # when everything is OK
 finally:
-    print("executing finally clause")
+    print("executing finally clause") # everytime
 ```
 
 
@@ -273,7 +273,8 @@ func()
 ```python
 print([i**2 for i in range(5)])     # list
 print((i**2 for i in range(5)))     # generator
-print({i: i**2 for i in range(5)})    # dict
+print({i: i**2 for i in range(5)})  # dict
+print([i**2 for i in range(5) if i % 2 == 0])     # list
 ```
 
 #### Benchmarking
@@ -310,8 +311,10 @@ def infinite_sequence():
         yield num
         num += 1
 ```
-
-
+ #### Exercise - palindroms
+ * palindrom is number that is read letf to right some as right to left
+ * create function `get_palindroms(begin_from, num_of_palindrons)`
+ 
 #### Exercise - poem
 * Write program that print poem with reverse order of lines
 * Write program that reverses order of words in each line
@@ -369,6 +372,9 @@ def eat(self, food):
 def older_than(cls, dog):
     return cls(dog.name, dog.age + 1)
 ```
+#### Exercise - complex numbers
+* create class ComplexNumber so that we can use operators
+ `+`, `-`, `*`, `/`, `str`, `len`, `==` 
 
 #### Instantiating Objects
 * instances of several Dogs
