@@ -713,30 +713,373 @@ https://www.wxpython.org/
 * widgets: frame, label, button...
 
 ```python
-from tkinter import Tk, Frame
-root = Tk()
-frame = Frame(root)
-
-root.mainloop()
+import tkinter 
+m = tkinter.Tk() 
+''' 
+widgets are added here 
+'''
+m.mainloop() 
 ```
-
 #### Geometry of Widgets
-* pack - expand widgets as big as possible
-* grid - align widgets to grid
-* place - exact absolute position
-TODO example + exercise
+* **pack** expand widgets as big as possible
+* **grid** align widgets to grid
+* **place** exact absolute position
 
 #### Button
+* **activebackground** to set the background color when button is under the cursor.
+* **activeforeground** to set the foreground color when button is under the cursor.
+* **bg** to set he normal background color.
+* **command** to call a function.
+* **font** to set the font on the button label.
+* **image** to set the image on the button.
+* **width** to set the width of the button.
+* **height** to set the height of the button.
+![Button](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-300x67.png)
+
 ```python
-from tkinter import Button
-button = Button(parent, text="Click me", command=clickButtonCb)
-button.place(x=0, y=0)
+import tkinter as tk 
+r = tk.Tk() 
+r.title('Counting Seconds') 
+button = tk.Button(r, text='Stop', width=25, command=r.destroy) 
+button.pack() 
+r.mainloop() 
 ```
 
-#### Example
-* colorButtons.py
+#### Canvas
+* **bd** to set the border width in pixels.
+* **bg** to set the normal background color.
+* **cursor** to set the cursor used in the canvas.
+* **highlightcolor** to set the color shown in the focus highlight.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
 
-#### Exercise 
+![Canvas](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-1.png)
+```python
+from tkinter import *
+master = Tk() 
+w = Canvas(master, width=40, height=60) 
+w.pack() 
+canvas_height=20
+canvas_width=200
+y = int(canvas_height / 2) 
+w.create_line(0, y, canvas_width, y ) 
+mainloop() 
+```
+
+#### CheckButton
+* **Title** To set the title of the widget.
+* **activebackground** to set the background color when widget is under the cursor.
+* **activeforeground** to set the foreground color when widget is under the cursor.
+* **bg** to set he normal background color.
+* **command** to call a function.
+* **font** to set the font on the button label.
+* **image** to set the image on the widget.
+
+```python
+from tkinter import *
+master = Tk() 
+var1 = IntVar() 
+Checkbutton(master, text='male', variable=var1).grid(row=0, sticky=W) 
+var2 = IntVar() 
+Checkbutton(master, text='female', variable=var2).grid(row=1, sticky=W) 
+mainloop() 
+```
+![CheckButton](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-2.png)
+
+#### Entry
+* **bd** to set the border width in pixels.
+* **bg** to set the normal background color.
+* **cursor** to set the cursor used.
+* **command** to call a function.
+* **highlightcolor** to set the color shown in the focus highlight.
+* **width** to set the width of the button.
+* **height** to set the height of the button.
+
+```python
+from tkinter import *
+master = Tk() 
+Label(master, text='First Name').grid(row=0) 
+Label(master, text='Last Name').grid(row=1) 
+e1 = Entry(master) 
+e2 = Entry(master) 
+e1.grid(row=0, column=1) 
+e2.grid(row=1, column=1) 
+mainloop() 
+```
+![Entry](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-3.png)
+
+#### Frame
+* **highlightcolor** To set the color of the focus highlight when widget has to be focused.
+* **bd** to set the border width in pixels.
+* **bg** to set the normal background color.
+* **cursor** to set the cursor used.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+```python
+from tkinter import *
+
+root = Tk() 
+frame = Frame(root) 
+frame.pack() 
+bottomframe = Frame(root) 
+bottomframe.pack( side = BOTTOM ) 
+redbutton = Button(frame, text = 'Red', fg ='red') 
+redbutton.pack( side = LEFT) 
+greenbutton = Button(frame, text = 'Brown', fg='brown') 
+greenbutton.pack( side = LEFT ) 
+bluebutton = Button(frame, text ='Blue', fg ='blue') 
+bluebutton.pack( side = LEFT ) 
+blackbutton = Button(bottomframe, text ='Black', fg ='black') 
+blackbutton.pack( side = BOTTOM) 
+root.mainloop() 
+```
+![Frame](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-4.png)
+
+
+#### Label
+* **bg** to set he normal background color.
+* **bg** to set he normal background color.
+* **command** to call a function.
+* **font** to set the font on the button label.
+* **image** to set the image on the button.
+* **width** to set the width of the button.
+* **height** to set the height of the button.
+```python
+from tkinter import *
+root = Tk() 
+w = Label(root, text='Python is the best !', font=("Helvetica", 18)) 
+w.pack() 
+root.mainloop()
+```
+![Label]()
+
+#### ListBox
+* **highlightcolor** To set the color of the focus highlight when widget has to be focused.
+* **bg** to set he normal background color.
+* **bd** to set the border width in pixels.
+* **font** to set the font on the button label.
+* **image** to set the image on the widget.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+```python
+from tkinter import *
+
+top = Tk() 
+Lb = Listbox(top) 
+Lb.insert(1, 'Python') 
+Lb.insert(2, 'Java') 
+Lb.insert(3, 'C++') 
+Lb.insert(4, 'Any other') 
+Lb.pack() 
+top.mainloop()
+```
+![ListBox](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-6.png)
+
+#### MenuButton
+* **activebackground** To set the background when mouse is over the widget.
+* **activeforeground** To set the foreground when mouse is over the widget.
+* **bg** to set he normal background color.
+* **bd** to set the size of border around the indicator.
+* **cursor** To appear the cursor when the mouse over the menubutton.
+* **image** to set the image on the widget.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+* **highlightcolor** To set the color of the focus highlight when widget has to be focused.
+```python
+from tkinter import *
+
+top = Tk() 
+mb = Menubutton ( top, text = &quot;GfG&quot;) 
+mb.grid() 
+mb.menu = Menu ( mb, tearoff = 0 ) 
+mb[&quot;menu&quot;] = mb.menu 
+cVar = IntVar() 
+aVar = IntVar() 
+mb.menu.add_checkbutton ( label ='Contact', variable = cVar ) 
+mb.menu.add_checkbutton ( label = 'About', variable = aVar ) 
+mb.pack() 
+top.mainloop()
+```
+
+![MenuButton](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-8.png)
+
+#### Menu
+* **title** To set the title of the widget.
+* **activebackground** to set the background color when widget is under the cursor.
+* **activeforeground** to set the foreground color when widget is under the cursor.
+* **bg** to set he normal background color.
+* **command** to call a function.
+* **font** to set the font on the button label.
+* **image** to set the image on the widget.
+```python
+from tkinter import *
+	
+root = Tk() 
+menu = Menu(root) 
+root.config(menu=menu) 
+filemenu = Menu(menu) 
+menu.add_cascade(label='File', menu=filemenu) 
+filemenu.add_command(label='New') 
+filemenu.add_command(label='Open...') 
+filemenu.add_separator() 
+filemenu.add_command(label='Exit', command=root.quit) 
+helpmenu = Menu(menu) 
+menu.add_cascade(label='Help', menu=helpmenu) 
+helpmenu.add_command(label='About') 
+mainloop()
+```
+![Menu](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-9.png)
+
+### Message
+* **bd** to set the border around the indicator.
+* **bg** to set he normal background color.
+* **font** to set the font on the button label.
+* **image** to set the image on the widget.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+```python
+from tkinter import *
+main = Tk() 
+ourMessage ='This is our Message'
+messageVar = Message(main, text = ourMessage) 
+messageVar.config(bg='lightgreen') 
+messageVar.pack( ) 
+main.mainloop( ) 
+```
+![Message](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-10.png)
+
+### RadioButton
+* **activebackground** to set the background color when widget is under the cursor.
+* **activeforeground** to set the foreground color when widget is under the cursor.
+* **bg** to set he normal background color.
+* **command** to call a function.
+* **font** to set the font on the button label.
+* **image** to set the image on the widget.
+* **width** to set the width of the label in characters.
+* **height** to set the height of the label in characters.
+```python
+from tkinter import *
+root = Tk() 
+v = IntVar() 
+Radiobutton(root, text='GfG', variable=v, value=1).pack(anchor=W) 
+Radiobutton(root, text='MIT', variable=v, value=2).pack(anchor=W) 
+mainloop()
+```
+![RadioButton](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-11.png)
+
+### Scale
+* **cursor** To change the cursor pattern when the mouse is over the widget.
+* **activebackground** To set the background of the widget when mouse is over the widget.
+* **bg** to set he normal background color.
+* **orient** Set it to HORIZONTAL or VERTICAL according to the requirement.
+* **from**: To set the value of one end of the scale range.
+* **to** To set the value of the other end of the scale range.
+* **image** to set the image on the widget.
+* **width** to set the width of the widget.
+```python
+from tkinter import *
+master = Tk() 
+w = Scale(master, from_=0, to=42) 
+w.pack() 
+w = Scale(master, from_=0, to=200, orient=HORIZONTAL) 
+w.pack() 
+mainloop()
+```
+![Scale](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-12.png)
+
+### ScrollBar
+* **width** to set the width of the widget.
+* **activebackground** To set the background when mouse is over the widget.
+* **bg** to set he normal background color.
+* **bd** to set the size of border around the indicator.
+* **cursor** To appear the cursor when the mouse over the menubutton.
+```python
+from tkinter import *
+root = Tk() 
+scrollbar = Scrollbar(root) 
+scrollbar.pack( side = RIGHT, fill = Y ) 
+mylist = Listbox(root, yscrollcommand = scrollbar.set ) 
+for line in range(100): 
+    mylist.insert(END, 'This is line number' + str(line)) 
+mylist.pack( side = LEFT, fill = BOTH ) 
+scrollbar.config( command = mylist.yview ) 
+mainloop()
+```
+![ScrollBar](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-13.png)
+
+### Text
+* **highlightcolor** To set the color of the focus highlight when widget has to be focused.
+* **insertbackground** To set the background of the widget.
+* **bg** to set he normal background color.
+* **font** to set the font on the button label.
+* **image** to set the image on the widget.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+```python
+from tkinter import *
+root = Tk() 
+T = Text(root, height=2, width=30) 
+T.pack() 
+T.insert(END, "First line\nSecond line") 
+mainloop()
+```
+![Text]()
+
+### TopLevel
+* **bg** to set he normal background color.
+* **bd** to set the size of border around the indicator.
+* **cursor** To appear the cursor when the mouse over the menubutton.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+```python
+from tkinter import *
+root = Tk() 
+root.title('GfG') 
+top = Toplevel() 
+top.title('Python') 
+top.mainloop()
+```
+![TopLevel](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-15.png)
+
+### SpinBox
+* **bg** to set he normal background color.
+* **bd** to set the size of border around the indicator.
+* **cursor** To appear the cursor when the mouse over the menubutton.
+* **command** To call a function.
+* **width** to set the width of the widget.
+* **activebackground** To set the background when mouse is over the widget.
+* **disabledbackground** To disable the background when mouse is over the widget.
+* **from**: To set the value of one end of the range.
+* **to** To set the value of the other end of the range.
+```python
+from tkinter import *
+master = Tk() 
+w = Spinbox(master, from_ = 0, to = 10) 
+w.pack() 
+mainloop()
+```
+![SpinBox](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-16.png)
+
+### PannedWindow
+* **bg** to set he normal background color.
+* **bd** to set the size of border around the indicator.
+* **cursor** To appear the cursor when the mouse over the menubutton.
+* **width** to set the width of the widget.
+* **height** to set the height of the widget.
+```python
+from tkinter import *
+m1 = PanedWindow() 
+m1.pack(fill = BOTH, expand = 1) 
+left = Entry(m1, bd = 5) 
+m1.add(left) 
+m2 = PanedWindow(m1, orient = VERTICAL) 
+m1.add(m2) 
+top = Scale( m2, orient = HORIZONTAL) 
+m2.add(top) 
+mainloop()
+```
+![PannedWindow](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-17.png)
+
 
 
 #### Menu
@@ -760,54 +1103,5 @@ label = Label(parent, text="Tkinter", fg="red", font=("Helvetica", 18))
 * in menu, change time format
 * clock.py
 
-#### Tk vs. ttk
-TODO
-
-
-#### Image
-```python
-load = Image.open("parrot.jpg")
-render = ImageTk.PhotoImage(load)
-```
-
-TODO
-https://pythonbasics.org/#Tkinter
-https://www.tutorialspoint.com/python/tk_frame.htm
-https://www.root.cz/clanky/graficke-uzivatelske-rozhrani-v-pythonu-knihovna-tkinter/
-
-
-#### Exercise
-https://projekty.pyladies.cz/session?course=pyladies-2019-ostrava-podzim&session=loops
-
-
-#### QT
-https://pythonbasics.org/
-
-## threading + asyncio
-https://realpython.com/intro-to-python-threading/
-https://realpython.com/quizzes/python-threading/
-https://realpython.com/async-io-python/
-
-* todo: dva tasky, jeden spustí call_later v náhodném čase a druhý se bude ravidelně ptát kdy to bude spuštěné
-
-
-## Database support
-
-
-DB API
-ODBC
-Native Python databases
-* mysqlclient
-
-
-## Web server
-flask + celery + db
-- flask: registrovat nový task, prohlížení všech tasků (běžící + hotové)
-- db: table task (id, name, time_taken, status)
-- dlouhé tasky spouštět v celery
-
-
-## Online resources
-Books
-Tutorials
-IDEs
+### Events and Binding
+http://tkinter.programujte.com/tkinter-events-and-bindings.htm
