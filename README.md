@@ -1098,7 +1098,7 @@ widget.after(1000, event)
 ```
 ### Binding events
 ```python
-def move():
+def move(event):
     pass
 
 widget.bind("<Enter>", move)
@@ -1150,6 +1150,7 @@ https://pypi.org/project/pysqlite/
 import sqlite3
 db_file = "database.db"
 conn = sqlite3.connect(db_file)
+conn.close()
 ```
 
 ### Querying database
