@@ -734,6 +734,7 @@ m.mainloop()
 * **image** to set the image on the button.
 * **width** to set the width of the button.
 * **height** to set the height of the button.
+
 ![Button](https://media.geeksforgeeks.org/wp-content/uploads/Screenshot-68-300x67.png)
 
 ```python
@@ -889,15 +890,15 @@ top.mainloop()
 from tkinter import *
 
 top = Tk() 
-mb = Menubutton ( top, text = &quot;GfG&quot;) 
+mb = Menubutton (top, text="GfG") 
 mb.grid() 
-mb.menu = Menu ( mb, tearoff = 0 ) 
-mb[&quot;menu&quot;] = mb.menu 
+mb.menu = Menu (mb, tearoff=0) 
+mb["menu"] = mb.menu 
 cVar = IntVar() 
 aVar = IntVar() 
-mb.menu.add_checkbutton ( label ='Contact', variable = cVar ) 
-mb.menu.add_checkbutton ( label = 'About', variable = aVar ) 
-mb.pack() 
+mb.menu.add_checkbutton(label='Contact', variable=cVar) 
+mb.menu.add_checkbutton(label='About', variable=aVar) 
+mb.pack()
 top.mainloop()
 ```
 
@@ -1088,11 +1089,195 @@ tree.insert(folder1, "end", text="photo3.png", values=("23-Jun-17 11:30","PNG fi
 ```
 ![TreeView](https://i.stack.imgur.com/2Mzp2.png)
 
+### Delay Event
+```python
+def event():
+    pass
 
-#### Example
-* clock like 10:40:27, changing each second
-* in menu, change time format
-* clock.py
+widget.after(1000, event)
+```
+### Binding events
+```python
+def move():
+    pass
+
+widget.bind("<Enter>", move)
+```
 
 ### Events and Binding
 http://tkinter.programujte.com/tkinter-events-and-bindings.htm
+
+#### Example
+* clock
+  - clock in format 10:40:27
+  - changing each second
+  - change time format in menu
+* file manager
+  - choose directory at the begining
+  - read files and dirs and display it in treeview
+* catch the button
+  - create button (or label, image)
+  - bind event 'Enter' to button
+  - create more of them
+
+
+## Database
+
+### Database clients
+**MySQL**
+
+https://pypi.org/project/mysqlclient/
+
+**PostgreSQL**
+
+https://pypi.org/project/psycopg/
+
+
+**MS SQL Server**
+
+http://www.pymssql.org/en/stable/
+
+**SQLite**
+
+https://pypi.org/project/pysqlite/
+
+
+### Connecting to database
+* connect to DB in file, or create it
+* create DB in memory when `db_file == ":memory:"`
+* `conn` is object `Connection`
+```python
+import sqlite3
+db_file = "database.db"
+conn = sqlite3.connect(db_file)
+```
+
+### Querying database
+* create connection using `connect()`
+* create cursor by `cursor()`
+* pass query by `execute()`
+
+```python
+query = "SELECT * FROM table ..."
+c = conn.cursor()
+c.execute(query)
+```
+
+
+
+## Webserver Flask
+* Flask is webserver that is easy to use.
+
+https://flask-doc.readthedocs.io/en/latest/
+
+```python
+from flask import Flask
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return 'Huray, there is first web page !'
+
+if __name__ == '__main__':
+    app.run()
+```
+
+We registered the view `index` with route '/'. On URL '/' will be content that is returned by function `index`.
+
+#### Kinds of executions
+```python
+app.run(debug=True, )
+```
+
+#### Dynamic Routes
+**part of route is variable**
+```python
+@app.route('/user/<username>/')
+def profile(username):
+    return 'User {}'.format(username)
+```
+
+**exact type of route variable**
+```python
+@app.route('/post/<int:post_id>/')
+```
+
+**Even more routes**
+```python
+@app.route('/hello/')
+@app.route('/hello/<name>/')
+def hello(name='world'):
+    return 'Hello, {}!'.format(name)
+```
+
+#### Getting URLs
+* oposite way to routes
+```python
+from flask import url_for
+# ...
+@app.route('/url/')
+def show_url():
+    return url_for('profile', username='martin_cerny')
+```
+
+#### Templates
+We can use html pages like
+```python
+@app.route('/')
+def hello():
+    return '<html><head><title>...'
+```
+..but there will be lot of html codes. Better way is to separate html to separate files (templates).
+
+```python
+from flask import render_template
+
+@app.route('/hello/<name>/')
+def hello(name=None):
+    return render_template('hello.html', name=name)
+```
+
+
+* Templates are in [Jinja2](https://jinja.palletsprojects.com/en/2.10.x/templates/) language and includes:
+  - html code
+  - variables `{{ variable }}`
+  - for loop `{% for %}` and `{% endfor %}`
+  - conditions `{% if %}`, `{% else %}` and `{% endif %}`
+```jinja2
+<!doctype html>
+<html>
+    <head>
+        <title>Hello from Flask</title>
+    </head>
+    <body>
+        {% if name %}
+            <h1>Hello {{ name }}!</h1>
+            <a href="{{ url_for('hello') }}">Go back home</a>
+        {% else %}
+            <h1>Hello, World!</h1>
+        {% endif %}
+    </body>
+</html>
+```
+
+#### Filters
+Filters are functions that converts some data to data to show to user. Eg. type date convert to str.
+```python
+from datetime import datetime
+from flask import render_template
+
+@app.template_filter('time')
+def convert_time(dt):
+    return dt.strftime('%c')
+
+@app.route('/date_example')
+def date_example():
+    return render_template(
+        'date_example.html',
+        created_at=datetime.now(),
+    )
+```
+and in template, it is used like:
+```jinja2
+{{ created_at|time }}
+```
