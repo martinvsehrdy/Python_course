@@ -8,7 +8,6 @@
 * described as an interpreted and dynamic programming language
 * focus on code readability
 
-todo https://pyladies.cz/praha/
 ### Versions
 * Python 2.7
 * Python 3.8
@@ -73,6 +72,7 @@ int
 float
 str
 bool
+bytes
 ```
 * strings operations
 ```
@@ -115,10 +115,10 @@ else:
 ```
 #### For Loops
 ```python
-city = ['Tokyo','New York','Toronto','Hong Kong']
+cities = ['Tokyo','New York','Toronto','Hong Kong']
 print('Cities loop:')
-for x in city:
-    print('City: ' + x)
+for city in cities:
+    print('City: ' + city)
 
 print('\n')  # newline
 
@@ -144,9 +144,17 @@ while True:
 
 ### Built-in Functions
 https://docs.python.org/3/library/functions.html
+* input output: `print`, `input`, `open`
+* basic types convertion: `str`, `int`, `float`, `bool`, `bytes`
+* types and classes: `type`, `isinstance`, `issubclass`, `id`
+* data structures: `list`, `set`, `dict`, `tuple`, `len`, `range`, `sorted`, `reversed`
+* modification: `zip`, `enumerate`, `map`, `filter`
+* agregation: `min`, `max`, `sum`, `all`, `any` 
+* python execution: `exec`, `eval`
+
 
 #### Exercises - calculator
-* Program that get 2 numbers and string `+`, `-`, `*` or `/` from and print result.
+* Program that get 2 numbers and string `+`, `-`, `*` or `/` and print result.
 ```shell script
 First number: 12
 Second number: 3
@@ -159,10 +167,10 @@ Operation: +
 ## Code structure
 #### Functions
 ```python
-def currentYear():
+def printCurrentYear():
     print('2018')
 
-currentYear()
+printCurrentYear()
 
 def multiply(x,y):
     return x*y
@@ -171,10 +179,16 @@ result  = multiply(3,4)
 print(result)
 ```
 * lambda function
+```python
+identity_func = lambda x: x
+
+identity_func(10)
+map(lambda x: x + 1, [3, 7, 2]) # map object that contains [4, 8, 3]
+```
 
 
 #### Container Types
-array
+* array
 ```python
 fruits = ["orange", "plum", "apple"]
 fruits.append("pear")
@@ -182,7 +196,10 @@ fruits.append(5)
 fruits.pop()
 fruits[2]
 fruits[-1]
+"banana" in fruits  # find out if "banana" is in fruits 
 fruits.sort()
+# or using built-in sorted
+sorted(fruits)
 ```
 
 dict
@@ -195,6 +212,7 @@ d = {
 d["key"] = "value"
 d["key"]
 d.get("key")
+d.update({5: "five", 6: "six"})
 d.items()
 d.keys()
 ```
@@ -202,6 +220,8 @@ d.keys()
 set
 ```python
 s = {1, 2, 3}
+s.intersection({1, 6})  # {1}
+s.difference({1, 6})    # {2, 3}
 s.add(6)
 ```
 
@@ -214,7 +234,7 @@ t = (0, )
 #### Exercises - fruits
 Lets have list of fruits: "plum", "apple", "pear", "apricot", "grape", "banana"
 * write function that returns fruits that has name shorter than 6
-* write function that returns fruits beggining "a"
+* write function that returns fruits beginning "a"
 * write function that find out if given word is one of our fruit
   - return True or False
 * write function that get 2 list of fruits and return
@@ -278,6 +298,7 @@ print([i**2 for i in range(5) if i % 2 == 0])     # list
 ```
 
 #### Benchmarking
+##### cProfile
 ```python
 import cProfile
 
@@ -291,19 +312,25 @@ cProfile.run('function1(10000)')
 ```
 * see more at https://docs.python.org/3.8/library/profile.html
 
+##### timeit
+```python
+from timeit import timeit
+mysetup = "from math import sqrt"
+
+timeit("map(sqrt, range(100))", setup=mysetup, number=1000)
+timeit("list(map(sqrt, range(100)))", setup=mysetup, number=1000)
+timeit("[sqrt(a) for a in range(100)]", setup=mysetup, number=1000)
+```
 
 #### Generators
 * read large files
 * infinite sequence
-* is palindrom
 * throw, close, send
 
 ```python
 def large_file_reader(file_name):
     for row in open(file_name, "r"):
         yield row
-
-a = range(5)
 
 def infinite_sequence():
     num = 0
@@ -312,8 +339,8 @@ def infinite_sequence():
         num += 1
 ```
  #### Exercise - palindroms
- * palindrom is number that is read letf to right some as right to left
- * create function `get_palindroms(begin_from, num_of_palindrons)`
+ * palindrom is number that is read left to right some as right to left
+ * create function `get_palindroms(begin_from, num_of_palindroms)`
  
 #### Exercise - poem
 * Write program that print poem with reverse order of lines
@@ -331,7 +358,7 @@ class Dog:
 
 #### Instance Attributes
 * all classes creates objects
-* object contains charasteristic called attributes (properties)
+* object contains characteristic called attributes (properties)
 ```python
 class Dog:
     # Initializer / Instance Attributes
@@ -498,7 +525,7 @@ def say_whee():
 #### Exercise - decorators
 * create and apply decorator
   - that runs function twice (or n-times)
-  - not to run durring night (or during odd minutes)
+  - not to run during night (or during odd minutes)
   - to measure and print time that function takes
   - debug decorator that print when function is called and its args
   - slow down function - time.sleep(1) before calling function
@@ -1153,6 +1180,20 @@ conn = sqlite3.connect(db_file)
 conn.close()
 ```
 
+### Create table and insert
+* create connection using `connect()`
+* create cursor by `cursor()`
+* execute query `cursor.execute()`
+* save data to file `conn.commit()`
+
+```python
+query = "INSERT INTO table () VALUES (...)"
+c = conn.cursor()
+c.execute(query)
+conn.commit()
+conn.close()
+```
+
 ### Querying database
 * create connection using `connect()`
 * create cursor by `cursor()`
@@ -1165,9 +1206,8 @@ c.execute(query)
 ```
 
 
-
 ## Webserver Flask
-* Flask is webserver that is easy to use.
+* Flask is webserver that is easy to be used.
 
 https://flask-doc.readthedocs.io/en/latest/
 
@@ -1186,8 +1226,10 @@ if __name__ == '__main__':
 We registered the view `index` with route '/'. On URL '/' will be content that is returned by function `index`.
 
 #### Kinds of executions
+* debug/deploy mode
+* host + port
 ```python
-app.run(debug=True, )
+app.run(host="0.0.0.0", port=8000, debug=True)
 ```
 
 #### Dynamic Routes
@@ -1195,12 +1237,13 @@ app.run(debug=True, )
 ```python
 @app.route('/user/<username>/')
 def profile(username):
-    return 'User {}'.format(username)
+    return f"User {username}"
 ```
 
 **exact type of route variable**
 ```python
 @app.route('/post/<int:post_id>/')
+def view(): pass
 ```
 
 **Even more routes**
@@ -1208,17 +1251,17 @@ def profile(username):
 @app.route('/hello/')
 @app.route('/hello/<name>/')
 def hello(name='world'):
-    return 'Hello, {}!'.format(name)
+    return f"Hello, {name}!"
 ```
 
 #### Getting URLs
-* oposite way to routes
+* opposite way to routes
 ```python
 from flask import url_for
 # ...
 @app.route('/url/')
 def show_url():
-    return url_for('profile', username='martin_cerny')
+    return url_for("profile", username="martin_cerny")
 ```
 
 #### Templates
@@ -1262,7 +1305,7 @@ def hello(name=None):
 ```
 
 #### Filters
-Filters are functions that converts some data to data to show to user. Eg. type date convert to str.
+Filters are functions that converts any type of data to str to print to html template.
 ```python
 from datetime import datetime
 from flask import render_template
@@ -1282,3 +1325,16 @@ and in template, it is used like:
 ```jinja2
 {{ created_at|time }}
 ```
+
+## Other Links
+* Official Python website (https://www.python.org/)
+* [Pyvo](https://pyvo.cz/)
+  - Czech Python community
+* [PyLadies](https://pyladies.cz/praha/)
+  - Python courses for beginners (:girl:)
+* [PyCon](https://pycon.org/) - Python Conference
+  - [PyCon 2017 on youtube](https://www.youtube.com/channel/UCrJhliKNQ8g0qoE_zvL8eVg)
+  - [PyCon 2018 on youtube](https://www.youtube.com/channel/UCsX05-2sVSH7Nx3zuk3NYuQ)
+  - [PyCon 2019 on youtube](https://www.youtube.com/channel/UCxs2IIVXaEHHA4BtTiWZ2mQ)
+* [PyData](https://pydata.org/)
+  - [PyData on youtube](https://www.youtube.com/user/PyDataTV)
