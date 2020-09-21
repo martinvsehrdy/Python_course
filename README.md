@@ -20,21 +20,21 @@
 ### Instalation & Environment
 Create python environment
 ```shell script
-conda create -n py38 python=3.8
+conda create -n course python=3.8
 ```
 
 De/Activate environment
 ```shell script
-conda activate py38
+conda activate course
 conda deactivate
 ```
 
-All my environment
+All my environments
 ```shell script
 conda env list
 ```
 
-Install packages
+Install package
 ```shell script
 pip freeze
 pip install <package name>
@@ -1204,6 +1204,27 @@ query = "SELECT * FROM table ..."
 c = conn.cursor()
 c.execute(query)
 ```
+
+#### Exercises
+* download database.db
+* select all authors
+* select all articles of one of them
+
+
+|cid | name  | type     | notnull | dflt_value | pk   |
+|----|-------|----------|---------|------------|------|
+| 0  | id    | integer  | 0       |            |  1   |
+| 1  | name  | CHAR(50) | 0       |            |  0   |
+
+| cid | name       | type      | notnull | dflt_value | pk |
+|-----|------------|-----------|---------|------------|----|
+| 0   | id         | integer   | 0       |            | 1  |
+| 1   | title      | CHAR(100) | 0       |            | 0  |
+| 2   | text       | text      | 0       |            | 0  |
+| 3   | author_id  | integer   | 0       |            | 0  |
+| 4   | timestamp  | TIMESTAMP | 0       | CURRENT_TI | 0  |
+| 5   | read_count | integer   | 0       | 0          | 0  |
+
 
 
 ## Webserver Flask
