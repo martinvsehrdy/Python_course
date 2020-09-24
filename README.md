@@ -1347,6 +1347,302 @@ and in template, it is used like:
 {{ created_at|time }}
 ```
 
+# Data Analysis
+## NumPy
+* NumPy is a python library used for working with
+  - arrays, linear algebra, fourier transform and matrices
+* NumPy stands for **Num**erical **Py**thon
+* written in C/C++
+* numpy array `ndarray` is up to 50x faster than regular `list` 
+
+
+#### Installation and import
+```bash
+pip install numpy
+```
+```python
+import numpy as np
+
+print(np.__version__)   # check version
+
+arr = np.array([1, 2, 3, 4, 5])
+print(type(arr), arr)
+```
+
+#### N-dimensions array
+* 0-D array - scalar
+```python
+np.array(42)
+```
+* 1-D array
+```python
+np.array([1, 2, 3, 4])
+```
+* 2-D array - matrice
+```python
+np.array([[1, 2, 3], [4, 5, 6]])
+```
+* 3-D array
+```python
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[1, 2, 3], [4, 5, 6]]])
+```
+* dimension of array
+```python
+arr = np.array([1, 2, 3, 4], ndmin=5)
+# array([[[[[1, 2, 3, 4]]]]])
+print(arr.ndim)
+```
+
+#### Array indexing
+```python
+import numpy as np
+
+arr = np.array([1, 2, 3, 4])
+
+arr[0]  # 1
+arr[1]  # 2
+arr[2] + arr[3] # 7
+```
+
+```python
+import numpy as np
+
+arr = np.array([[[1, 2, 3], [4, 5, 6]], [[7, 8, 9], [10, 11, 12]]])
+
+print(arr[0, 1, 2]) # return 6 - why?
+```
+* negative indexing
+```python
+arr = np.array([[1,2,3,4,5], [6,7,8,9,10]])
+arr[1, -1]  # Last element from 2nd dim
+```
+
+#### Slicing Array
+* pass begin, end and step `[begin:end]`, `[begin:end:step]`
+* don't pass anything `[:end:step]`, `[begin::step]`, `[:]`
+```python
+arr = np.array([1, 2, 3, 4, 5, 6, 7])
+arr[1:5]    # array([2, 3, 4, 5])
+arr[:4]     # array([1, 2, 3, 4])
+arr[4:]     # array([5, 6, 7])
+arr[::2]    # array([1, 3, 5, 7])
+
+arr2 = np.array([[1, 2, 3, 4, 5], [6, 7, 8, 9, 10]])
+arr2[1, 1:4]    # array([7, 8, 9])
+```
+
+#### Data types
+* NumPy has daty types
+  - `i` integer
+  - `b` boolean
+  - `u` unsigned integer
+  - `f` float
+  - `c` complex float
+  - `m` timedelta
+  - `M` datetime
+  - `O` object
+  - `S` string
+  - `U` unicode string
+  - `V` void - fixed chunk of memory for other type
+
+```python
+import numpy as np
+
+np.array([1, 2, 3, 4]).dtype    # dtype('int64')
+np.array(['apple', 'banana', 'cherry']).dtype   # dtype('<U6')
+np.array([1, 2, 3, 4], dtype='S').dtype # dtype('S1')
+
+arr = np.array([1.1, 2.1, 3.1])
+arr.astype('i').dtype     # dtype('int32')
+arr.astype(int).dtype     # dtype('int64')
+```
+
+#### Copy vs. View
+```python
+import numpy as np
+
+arr = np.array([1, 2, 3, 4])
+arr_copy = arr.copy()
+arr_view = arr.view()
+arr[0] = 42
+arr         # array([42,  2,  3,  4])
+arr_copy    # array([ 1,  2,  3,  4])
+arr_view    # array([42,  2,  3,  4])
+```
+
+#### Shape & reshape
+```python
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8], ndmin=3)   # array([[[[[1, 2, 3, 4]]]]])
+arr.shape   # (1, 1, 8)
+
+arr.reshape(2, 4)  # array([[1, 2, 3, 4], [5, 6, 7, 8]])
+arr.reshape(4, 2)  # array([[1, 2], [3, 4], [5, 6], [7, 8]])
+```
+
+#### Joining array
+* concatenate 1d array
+```python
+import numpy as np
+
+arr1 = np.array([1, 2, 3])
+arr2 = np.array([4, 5, 6])
+
+np.concatenate((arr1, arr2))    # array([1, 2, 3, 4, 5, 6])
+```
+* concatenate and stack 2d array
+```python
+arr1 = np.array([[1, 2], [3, 4]])
+arr2 = np.array([[5, 6], [7, 8]])
+
+np.concatenate((arr1, arr2), axis=0)    # array([[1, 2], [3, 4], [5, 6], [7, 8]])
+np.concatenate((arr1, arr2), axis=1)    # array([[1, 2, 5, 6], [3, 4, 7, 8]])
+
+np.stack((arr1, arr2), axis=0)    # array([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+np.stack((arr1, arr2), axis=1)    # array([[[1, 2], [5, 6]], [[3, 4], [7, 8]]])
+np.stack((arr1, arr2), axis=2)    # array([[[1, 5], [2, 6]], [[3, 7], [4, 8]]])
+```
+
+#### Search
+```python
+import numpy as np
+
+arr = np.array([1, 2, 3, 4, 5, 4, 4])
+
+indexes_of_4 = np.where(arr == 4)   # (array([3, 5, 6],)
+arr[indexes_of_4]  # array([4, 4, 4])
+```
+
+#### Specific arrays
+* ones - array where every value is equal to 1
+* zeros - array where every value is equal to 0
+* identity - array where diagonal value is equal to and others 0
+* random - array with random values
+* choice - array that consists of the values from given array
+```python
+import numpy as np
+np.ones((2, 3))
+np.zeros((2, 3))
+np.eye(3)
+np.random.randint(100, size=(3, 5))
+np.random.choice([3, 5, 7, 9], size=(3, 5))
+```
+
+### Exercise
+* create an array of 10 zeros,10 ones, 10 fives
+* create a vector with values ranging from 15 to 55 and print all values except the first and last
+* create a vector with values from 0 to 20 and change the sign of the numbers in the range from 9 to 15
+* multiply the values of two given vectors
+* create a 10x10 matrix, in which the elements on the borders will be equal to 1, and inside 0
+* compute sum of all elements, sum of each column and sum of each row of a given array
+* save two given arrays into a single file in compressed format (.npz format) and load it
+* convert a given array into bytes, and load it as array
+* sort a given array of shape 2 along the first axis, last axis and on flattened array
+  - original array: [[10 40], [30 20]]
+  - sorted along the first axis: [[10 20], [30 40]]
+  - sorted the array along the last axis: [[10 40], [20 30]]
+  - sorted the flattened array: [10 20 30 40]
+
+
+## Pandas
+ * the most important tool of Data Scientists
+ * clean, transform and analyze data
+ * calculate statistics and answer questions about the data
+ * the name pandas is derived from **pan**el **da**ta
+ * built on top of numpy
+
+#### Instalation and import
+```bash
+pip install pandas
+# OR
+conda install pandas
+```
+```python
+import pandas as pd
+```
+
+#### Core components of pandas
+* Series - essentially a column
+* DataFrame - multi-dimensional table, collection of Series
+
+#### DataFrame from scratch
+* key-value item corresponds to a column in DataFrame
+```python
+data = {
+    'apples': [3, 2, 0, 1], 
+    'oranges': [0, 3, 7, 2]
+}
+pd.DataFrame(data)
+```
+```bash
+   apples  oranges
+0       3        0
+1       2        3
+2       0        7
+3       1        2
+```
+* let's have customer names as our index
+```python
+df = pd.DataFrame(data, index=['Jane', 'Robert', 'Lily', 'David'])
+```
+```bash
+        apples  oranges
+Jane         3        0
+Robert       2        3
+Lily         0        7
+David        1        2
+```
+* locate a customer's order by using their name (index)
+```python
+df.loc['Jane']
+```
+```bash
+apples     3
+oranges    0
+Name: June, dtype: int64
+```
+
+#### How to read data
+* from/to CSVs
+```python
+df = pd.read_csv('purchases.csv')
+# ... working with DataFrame
+df.to_csv('new_purchases.csv')
+```
+* from/to JSON
+```python
+df = pd.read_json('purchases.json')
+# ... working with DataFrame
+df.to_json('new_purchases.json')
+```
+
+* from/to database
+```python
+import sqlite3, pandas as pd
+
+conn = sqlite3.connect("database.db")
+df = pd.read_sql_query("SELECT * FROM purchases", conn)
+# ... working with DataFrame
+df.to_sql('new_purchases', conn)
+```
+
+
+
+### Exercise - dataframe
+* download json file `pandas/dataframe_people.json`
+* create DataFrame from file which has the index labels
+* append a new row 'k' to data frame with given values for each column than delete the new row and return the original DataFrame.
+  - name : "Suresh", score: 15.5, attempts: 1, qualify: "yes", label: "k"
+* sort the DataFrame first by 'name' in descending order, then by 'score' in ascending order.
+* replace the 'qualify' column contains the values 'yes' and 'no' with True and False
+* change the name 'James' to 'Suresh' in name column of the DataFrame.
+* delete the 'attempts' column and insert a new column 'color' in DataFrame
+* count the NaN values in one or more columns in DataFrame
+* replace all the NaN values with Zero's in a column of a dataframe
+* shuffle a given DataFrame rows
+* get the datatypes of columns of a DataFrame
+* convert the datatype of a given column (floats to ints)
+
+
 ## Other Links
 * Official Python website (https://www.python.org/)
 * [Pyvo](https://pyvo.cz/)
