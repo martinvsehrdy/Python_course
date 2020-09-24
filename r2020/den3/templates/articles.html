@@ -12,16 +12,18 @@
 
 <div class="jumbotron">
 
+{% for article, url in articles|zip(urls) %}
 <div class="card w-100 mb-2">
   <div class="card-body">
-    <h4 class="card-title">Title of Article</h4>
-      <h6 class="card-subtitle mb-2 text-muted">Author</h6>
-      <p class="card-text"><small class="text-muted">Nov 4, 2019, 06:00am</small></p>
-    <p class="card-text">Part of text</p>
-    <a href="#" class="btn btn-primary">Read</a>
-    <a href="#" class="btn btn-secondary">Edit</a>
+    <h4 class="card-title">{{ article[1] }}</h4>
+      <h6 class="card-subtitle mb-2 text-muted">{{ authors[article[3]] }}</h6>
+      <p class="card-text"><small class="text-muted">{{ article[4] }}</small></p>
+    <p class="card-text">{{ article[2][:200] }}</p>
+    <a href="{{ url_for('article_view', article_id=article[0]) }}" class="btn btn-primary">Read</a>
+    <a href="{{ url }}" class="btn btn-secondary">Edit</a>
   </div>
 </div>
+{% endfor %}
 
 </div>
 

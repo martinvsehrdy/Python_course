@@ -5,7 +5,6 @@ import os
 import tkinter as tk
 from tkinter import Tk
 from tkinter.ttk import Treeview
-import filetype
 
 # importing askopenfile function
 # from class filedialog
@@ -18,7 +17,7 @@ def open_dir():
 	file = askdirectory()
 	print(file)
 
-tree = Treeview(root)
+tree = Treeview(root, height=600)
 tree.pack(fill=tk.BOTH)
 
 tree["columns"]=("date","filetype","size")
