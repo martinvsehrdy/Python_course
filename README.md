@@ -1601,7 +1601,7 @@ oranges    0
 Name: June, dtype: int64
 ```
 
-#### How to read data
+#### How to read in data
 * from/to CSVs
 ```python
 df = pd.read_csv('purchases.csv')
@@ -1625,6 +1625,131 @@ df = pd.read_sql_query("SELECT * FROM purchases", conn)
 df.to_sql('new_purchases', conn)
 ```
 
+#### Observing DataFrame
+* load the IMDB movies dataset
+```python
+movies_df = pd.read_csv("pandas/IMDB-Movie-Data.csv", index_col="Title")
+```
+
+* view your data - few first/last rows
+```python
+movies_df.head()
+movies_df.head(10)  # first 10 rows
+movies_df.last()
+movies_df.shape     # get shape - the some as numpy
+```
+* getting info about DataFrame
+```python
+movies_df.info()
+```
+
+#### Duplicates
+* duplicate all rows
+```python
+temp_df = movies_df.append(movies_df)
+
+temp_df.shape   # (2000, 11)
+```
+* remove duplicates
+```
+temp_df = temp_df.drop_duplicates() # return the results
+temp_df.shape   # (1000, 11)
+
+temp_df.drop_duplicates(inplace=True)   # remove it in place
+```
+
+#### Column cleanup
+* getting columns
+```
+movies_df.columns
+```
+* rename columns
+```
+movies_df.rename(columns={'Runtime (Minutes)': 'Runtime', 'Revenue (Millions)': 'Revenue_millions'}, inplace=True)
+movies_df.columns
+
+movies_df.columns = ['rank', 'genre', 'description', 'director', 'actors', 'year', 'runtime', 'rating', 'votes', 'revenue_millions', 'metascore']
+# OR
+movies_df.columns = [col.lower() for col in movies_df]
+movies_df.columns
+```
+
+#### Missing values
+* `isnull()` returns a DataFrame where each cell is either True or False
+```
+movies_df.isnull()
+```
+* count the number of nulls
+```
+movies_df.isnull().sum()
+```
+
+* removing null values
+```
+movies_df.dropna()
+movies_df.dropna(axis=1)
+```
+
+* Imputation - replace null values by mean, median..
+```
+revenue = movies_df['revenue_millions']
+revenue_mean = revenue.mean()
+revenue.fillna(revenue_mean, inplace=True)
+```
+
+* some statistics
+```
+movies_df.describe()    # print count, mean, min, max..
+movies_df['genre'].describe()   # it tells us there are 50 genres
+movies_df['genre'].value_counts().head(10)  # 10 top genres
+```
+
+#### DataFrame slicing, selecting, extracting
+* by column
+```
+genre_col = movies_df['genre']
+type(genre_col)     # pandas.core.series.Series
+
+genre_col = movies_df[['genre']]
+type(genre_col)     # pandas.core.frame.DataFrame
+```
+* by row `.loc`, `.iloc`
+```
+prom = movies_df.loc["Prometheus"]
+prom    # info about Prometheus movie
+# OR
+prom = movies_df.iloc[1]
+movie_subset = movies_df.iloc[1:4]
+```
+* by condition
+```
+condition = (movies_df['director'] == "Ridley Scott")
+condition.head()    # list of True or Flase
+
+movies_df[movies_df['director'] == "Ridley Scott"]  # movies of "Ridley Scott"
+```
+  - OR `|`, AND `&`
+  - is in `movies_df.isin()`
+  - quantile `movies_df.quantile(0.25)`
+
+#### Applying functions
+```
+movies_df["squared_rating"] = movies_df["rating"].apply(lambda x: x**2)
+```
+
+#### Brief Plotting
+* install `pip install matplotlib`
+
+```
+import matplotlib.pyplot as plt
+plt.rcParams.update({'font.size': 20, 'figure.figsize': (10, 8)}) # set font and plot size to be larger
+```
+* plotting DataFrame
+```
+movies_df.plot(kind='scatter', x='rating', y='revenue (millions)', title='Revenue (millions) vs Rating')
+movies_df['rating'].plot(kind='hist', title='Rating')
+movies_df['rating'].describe()  # these data are plotted
+```
 
 
 ### Exercise - dataframe
