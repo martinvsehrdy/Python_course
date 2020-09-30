@@ -1,7 +1,30 @@
-# Python
 ![Python Logo](https://www.python.org/static/community_logos/python-logo-master-v3-TM.png)
 
+# Python Course
+
+### Download tools we are using
+* download [anaconda](https://www.anaconda.com/products/individual#Downloads)
+* download [pycharm](https://www.jetbrains.com/pycharm/download) - Community edition is enough
+
+### Agenda
+| Chapter             | Duration          |
+| ------------------- | ----------------- |
+| Python Intro        | (40 min)          |
+| Basic syntax        | (1 h)             |
+| Built-in Functions  | (1 h)             |
+| Code structure      | (2,5 - 3 h)       |
+| Classes and objects | (3 h)             |
+| Decorators          | (1 - 2 h)         |
+| Working with files  | (1 h + 1 h)       |
+| Tkinter             | (40 min + 1:20 h) |
+| Database            | (30 min + 30 min) |
+| Webserver Flask     | (1,5 h + 1,5 h)   |
+| NumPy               | (1 h + 2 h)       |
+| Pandas              | (1 h + 2 h)       |
+
+
 ## Python Intro
+(40 min)
 * Python was created in 1991
 * By developer **Guido Van Rossum**
 * friendly and easy to learn
@@ -11,7 +34,8 @@
 ### Versions
 * Python 2.7
 * Python 3.8
-* [python.org](https://www.python.org/)
+* official website [python.org](https://www.python.org/)
+* official documentation [docs.python.org](https://docs.python.org/3/)
 
 
 * [Python Virtual Environment](https://docs.python.org/3/tutorial/venv.html)
@@ -44,7 +68,7 @@ or
 pip3 install -r requirements.txt
 ```
 
-## IDE
+### IDE
 [PyCharm](https://www.jetbrains.com/pycharm/)
 
 [Eclipse + PyDev](https://www.pydev.org/)
@@ -64,6 +88,7 @@ pip3 install -r requirements.txt
 * Settings
 
 ## Basic syntax
+(1 h)
 ### Data types
 #### Basic Types
 ```python
@@ -98,7 +123,7 @@ f""
 
 ```
 
-## Flow control
+### Flow control
 #### Conditions
 ```python
 gender = input("Gender? ")
@@ -142,18 +167,21 @@ while True:
         break
 ```
 
-### Built-in Functions
+## Built-in Functions
+(1 h)
 https://docs.python.org/3/library/functions.html
 * input output: `print`, `input`, `open`
 * basic types convertion: `str`, `int`, `float`, `bool`, `bytes`
 * types and classes: `type`, `isinstance`, `issubclass`, `id`
 * data structures: `list`, `set`, `dict`, `tuple`, `len`, `range`, `sorted`, `reversed`
+  - usage with containers [bellow](####container-types)
 * modification: `zip`, `enumerate`, `map`, `filter`
 * agregation: `min`, `max`, `sum`, `all`, `any` 
 * python execution: `exec`, `eval`
 
 
 #### Exercises - calculator
+(30 min)
 * Program that get 2 numbers and string `+`, `-`, `*` or `/` and print result.
 ```shell script
 First number: 12
@@ -162,9 +190,10 @@ Operation: +
 12 + 3 = 15
 ```
 * Program that ask user for 5 numbers and print the smallest one.
-* Program that is getting numbers sums them until user puts number 0
+* Program that is getting numbers until user puts number 0 and print sum of them
 
 ## Code structure
+(2,5 - 3 h)
 #### Functions
 ```python
 def printCurrentYear():
@@ -350,6 +379,7 @@ def infinite_sequence():
 
 
 ## Classes and objects
+(3 h)
 #### Define a Class
 ```python
 class Dog:
@@ -396,14 +426,14 @@ def eat(self, food):
     print(f"{self.name} eats {food}")
 
 @classmethod
-def older_than(cls, dog):
+def create_older_than(cls, dog):
     return cls(dog.name, dog.age + 1)
 ```
 #### Exercise - complex numbers
 * create class ComplexNumber so that we can use operators
  `+`, `-`, `*`, `/`, `str`, `len`, `==` 
 
-#### Instantiating Objects
+#### Create Instances of Objects
 * instances of several Dogs
 * compare them each other
 * type
@@ -419,7 +449,6 @@ def older_than(cls, dog):
 * add method is_hungry()
   - return True if energy is less than 25%
 
----
 
 #### Object Inheritance
 ```python
@@ -444,16 +473,16 @@ class Cat(Pet):
 * last created pet `Pet.lastPet()`
 
 
-#### Ecercise - Shapes
+#### Exercise - Shapes
 * create class Shape with methods:
   - area - surface of shape
   - length - the biggest length in any direction
   - expand - expands shape but keep ratio
 * create classes Circle, Rectangle and Line inherited from Shape
 * create properties (getter and setter) center, size, left_top, right_bottom
-----
 
 ## Decorators
+(1 - 2 h)
 ### Functions
 Lets have easy function
 ```python
@@ -531,69 +560,8 @@ def say_whee():
   - slow down function - time.sleep(1) before calling function
   - `register` that register functions and count how many times were called 
 
-
-#### Exercise - snake game
-* Napiš funkci, která dostane seznam souřadnic (párů čísel menších než 10, která určují sloupec a řádek) a vypíše je jako mapu: mřížku 10×10, kde na políčka která jsou v seznamu napíše X, jinde tečku. Například:
-```shell script
-nakresli_mapu([(0, 0), (1, 0), (2, 2), (4, 3), (8, 9), (8, 9)])
-X X . . . . . . . .
-. . . . . . . . . .
-. . X . . . . . . .
-. . . . X . . . . .
-. . . . . . . . . .
-. . . . . . . . . .
-. . . . . . . . . .
-. . . . . . . . . .
-. . . . . . . . . .
-. . . . . . . . X .
-```
-
-* Jak na to?
-  - Udělej tabulku (seznam seznamů) se samými tečkami, něco jako: `[['.', '.', '.'], ['.', '.', '.'], ['.', '.', '.']]`.
-  - Na příslušných místech nahraď tečky X-ky.
-  - Tabulku vypiš pomocí dvou cyklů for zanořených do sebe.
-
-
-* Napiš funkci pohyb, která dostane seznam souřadnic a světovou stranu ("s", "j", "v" nebo "z") a přidá k seznamu poslední bod „posunutý“ v daném směru. Např.:
-```python
-souradnice = [(0, 0)]
-pohyb(souradnice, 'v')
-print(souradnice)         # → [(0, 0), (1, 0)]
-pohyb(souradnice, 'v')
-print(souradnice)         # → [(0, 0), (1, 0), (2, 0)]
-pohyb(souradnice, 'j')
-print(souradnice)         # → [(0, 0), (1, 0), (2, 0), (2, 1)]
-pohyb(souradnice, 's')
-print(souradnice)         # → [(0, 0), (1, 0), (2, 0), (2, 1), (2, 0)]
-```
-  - Funkce by neměla nic vracet. Jen mění už existující seznam.
-
-
-* Napiš cyklus, který se bude ptát uživatele na světovou stranu, podle ní zavolá pohyb, a následně vykreslí seznam jako mapu. Pak se opět se zeptá na stranu atd.
-  - Začínej se seznamem [(0, 0), (1, 0), (2, 0)].
-
-
-* Doplň funkci pohyb tak, aby při pohybu umazala první bod ze seznamu souřadnic. Výsledný seznam tak bude mít stejnou délku, jako před voláním.
-
-
-* Doplň funkci pohyb tak, aby zamezila:
-  - pohybu ven z mapy,
-  - pohybu na políčko, které už v seznamu je.
-  - Vhodná výjimka pro tyto situace je ValueError('Game over').
-
-
-* Přidej do hry hadí potravu.
-
-* Seznam ovoce obsahuje na začátku jedno ovoce na políčku, na kterém není had (například: [(2, 3)] znamená jedno ovoce na pozici (2, 3)). Když had sežere ovoce, vyroste („nesmaže“ se mu ocas, tedy neprovede se to, cos přidala v projektu 13), a pokud na mapě zrovna není další ovoce, na náhodném místě (kde není had) vyroste ovoce nové.
-
-* Každých 30 tahů vyroste nové ovoce samo od sebe.
-
-* Na mapě se toto tajemné ovoce zobrazuje jako otazník (?).
-
-* Hadí hřiště může mít libovolné rozměry větší než 4×1. Třeba 20×20 nebo 10×30.
-
-
 ## Working with files
+(1 h + 1 h)
 ### module os
 
 * os.listdir - list
@@ -635,7 +603,7 @@ for entry in entries.iterdir():
 ```python
 import os
 os.mkdir()
-os.makedirs('2019/11/11', mode=0o770)
+os.makedirs('r2019/11/11', mode=0o770)
 ```
 
 ```python
@@ -682,6 +650,7 @@ for name in p.glob('*.p*'):
 ```
 
 #### Achiving
+(30 min)
 ```python
 import zipfile
 
@@ -736,6 +705,7 @@ https://www.wxpython.org/
 
 
 ## Tkinter
+(40 min + 1:20 h)
 #### Tk
 * widgets: frame, label, button...
 
@@ -1134,13 +1104,13 @@ widget.bind("<Enter>", move)
 ### Events and Binding
 http://tkinter.programujte.com/tkinter-events-and-bindings.htm
 
-#### Example
+#### Exercises
 * clock
   - clock in format 10:40:27
   - changing each second
   - change time format in menu
 * file manager
-  - choose directory at the begining
+  - choose directory at the beginning
   - read files and dirs and display it in treeview
 * catch the button
   - create button (or label, image)
@@ -1149,6 +1119,7 @@ http://tkinter.programujte.com/tkinter-events-and-bindings.htm
 
 
 ## Database
+(30 min + 30 min)
 
 ### Database clients
 **MySQL**
@@ -1166,9 +1137,12 @@ http://www.pymssql.org/en/stable/
 
 **SQLite**
 
-https://pypi.org/project/pysqlite/
+https://pypi.org/project/pysqlite3/
 
-
+### Install SQLite
+```bash
+pip install pysqlite3
+```
 ### Connecting to database
 * connect to DB in file, or create it
 * create DB in memory when `db_file == ":memory:"`
@@ -1209,7 +1183,12 @@ c.execute(query)
 * download database.db
 * select all authors
 * select all articles of one of them
+* append yourself as author to DB
 
+```bash
+sqlite> .tables
+author  article
+```
 
 |cid | name  | type     | notnull | dflt_value | pk   |
 |----|-------|----------|---------|------------|------|
@@ -1226,8 +1205,8 @@ c.execute(query)
 | 5   | read_count | integer   | 0       | 0          | 0  |
 
 
-
 ## Webserver Flask
+(1,5 h + 1,5 h)
 * Flask is webserver that is easy to be used.
 
 https://flask-doc.readthedocs.io/en/latest/
@@ -1349,6 +1328,7 @@ and in template, it is used like:
 
 # Data Analysis
 ## NumPy
+(1 h + 2 h)
 * NumPy is a python library used for working with
   - arrays, linear algebra, fourier transform and matrices
 * NumPy stands for **Num**erical **Py**thon
@@ -1528,6 +1508,7 @@ np.random.choice([3, 5, 7, 9], size=(3, 5))
 ```
 
 ### Exercise
+[//]: # (https://www.w3resource.com/python-exercises/numpy/index.php)
 * create an array of 10 zeros,10 ones, 10 fives
 * create a vector with values ranging from 15 to 55 and print all values except the first and last
 * create a vector with values from 0 to 20 and change the sign of the numbers in the range from 9 to 15
@@ -1544,6 +1525,7 @@ np.random.choice([3, 5, 7, 9], size=(3, 5))
 
 
 ## Pandas
+(1 h + 2 h)
  * the most important tool of Data Scientists
  * clean, transform and analyze data
  * calculate statistics and answer questions about the data
@@ -1753,6 +1735,7 @@ movies_df['rating'].describe()  # these data are plotted
 
 
 ### Exercise - dataframe
+[//]: # (https://www.w3resource.com/python-exercises/pandas/index.php)
 * download json file `pandas/dataframe_people.json`
 * create DataFrame from file which has the index labels
 * append a new row 'k' to data frame with given values for each column than delete the new row and return the original DataFrame.
