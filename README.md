@@ -2,6 +2,16 @@
 
 # Python Course
 
+[//]: # (nenahrávejte online přenos)
+[//]: # (kontakt na mě)
+[//]: # (představení studentů, něco o sobě, jaké má zkušenosti)
+
+[//]: # (todo
+webserver: update timestamp in DB
+webserver: update read_count 
+pandas:change data between people <-> movies 
+)
+
 ### Download tools we are using
 * download [anaconda](https://www.anaconda.com/products/individual#Downloads)
 * download [pycharm](https://www.jetbrains.com/pycharm/download) - Community edition is enough
@@ -217,7 +227,7 @@ map(lambda x: x + 1, [3, 7, 2]) # map object that contains [4, 8, 3]
 
 
 #### Container Types
-* array
+* list
 ```python
 fruits = ["orange", "plum", "apple"]
 fruits.append("pear")
@@ -258,6 +268,40 @@ tuple
 ```python
 t = (1, 2, "text", None)
 t = (0, )
+```
+
+**indexing**
+* pass begin, end and step `[begin:end]`, `[begin:end:step]`
+* don't pass anything `[:end:step]`, `[begin::step]`, `[:]`, `[::]`
+```python
+l = [1, 2, 3, 4, 5, 6, 7]
+l[1:5]    # [2, 3, 4, 5]
+l[:4]     # [1, 2, 3, 4]
+l[4:]     # [5, 6, 7]
+l[::2]    # [1, 3, 5, 7]
+```
+
+**unpacking**
+* unpack list/tuple
+```python
+l = [1, 2, 3]
+a, b, c = l # a = 1, b = 2, c = 3
+a, *b = l   # a = 1, b = [2, 3]
+function(*l)    # function(1, 2, 3)
+```
+
+* unpack dict
+```python
+old = {"a": 1, "b": 2}
+new = {**old, "c": 10}  # {"a": 1, "b": 2, "c": 10}
+```
+
+* unpack arguments and keyword arguments
+```python
+def function(*args, **kwargs):
+    pass
+# args -   list of arguments
+# kwargs - dict of keyword arguments
 ```
 
 #### Exercises - fruits
@@ -317,6 +361,35 @@ from module import func
 func()
 ```
 
+#### Generators
+* read large files
+```python
+def large_file_reader(file_name):
+    for row in open(file_name, "r"):
+        yield row
+```
+* infinite sequence
+```python
+def infinite_sequence():
+    num = 0
+    while True:
+        yield num
+        num += 1
+```
+* for-loop
+```python
+gen = iter(range(3))    # create generator(iterator) from range(3)
+for _ in gen:
+    pass
+```
+* next & StopIteration
+```python
+gen = iter(range(3))    # create generator(iterator) from range(3)
+next(gen)   # 0
+next(gen)   # 1
+next(gen)   # 2
+next(gen)   # StopIteration
+```
 
 #### Comprehensions
 ```python
@@ -327,21 +400,7 @@ print([i**2 for i in range(5) if i % 2 == 0])     # list
 ```
 
 #### Benchmarking
-##### cProfile
-```python
-import cProfile
-
-def function1(n):
-    pass # variant 1
-
-def function2(n):
-    pass # variant 2
-
-cProfile.run('function1(10000)')
-```
-* see more at https://docs.python.org/3.8/library/profile.html
-
-##### timeit
+**timeit**
 ```python
 from timeit import timeit
 mysetup = "from math import sqrt"
@@ -350,24 +409,17 @@ timeit("map(sqrt, range(100))", setup=mysetup, number=1000)
 timeit("list(map(sqrt, range(100)))", setup=mysetup, number=1000)
 timeit("[sqrt(a) for a in range(100)]", setup=mysetup, number=1000)
 ```
+**cProfile**
+* see more at https://docs.python.org/3.8/library/profile.html
 
-#### Generators
-* read large files
-* infinite sequence
-* throw, close, send
+#### Exercise - timeit
+* lets have list of numbers, write a function that return list of square of them
+  - use `map`
+  - use comprehensions
+  - use for loop 
+* what lasts the longest?
 
-```python
-def large_file_reader(file_name):
-    for row in open(file_name, "r"):
-        yield row
-
-def infinite_sequence():
-    num = 0
-    while True:
-        yield num
-        num += 1
-```
- #### Exercise - palindroms
+#### Exercise - palindroms
  * palindrom is number that is read left to right some as right to left
  * create function `get_palindroms(begin_from, num_of_palindroms)`
  
@@ -466,6 +518,42 @@ class Cat(Pet):
     def mnau(self):
         print("mnau")
 ```
+
+#### Abstract Base Class
+* abstract class and abstractmethod
+```python
+from abc import ABC, abstractmethod
+
+class AbstractClass(ABC):   # defines interface
+    @abstractmethod
+    def fce(self):
+        pass
+
+class DerivedClass(AbstractClass):
+    def fce(self):      # must be defined
+        super().fce()   # call method of parent class
+
+AbstractClass()     # TypeError: Can't instantiate abstract class AbstractClass with abstract methods fce
+DerivedClass()      # ok
+```
+
+* type or isinstance
+```python
+class BaseClass:
+    pass
+
+class DerivedClass(BaseClass):
+    pass
+
+derived = DerivedClass()
+
+type(derived) == DerivedClass       # True
+type(derived) == BaseClass          # False
+isinstance(derived, DerivedClass)   # True
+isinstance(derived, BaseClass)      # True
+```
+
+#### Built-in type, isinstance, issubclass
 
 #### Exercise - Pets
 * number of dogs (#instances)
@@ -1162,21 +1250,33 @@ conn.close()
 
 ```python
 query = "INSERT INTO table () VALUES (...)"
-c = conn.cursor()
-c.execute(query)
+cursor = conn.cursor()
+cursor.execute(query)
 conn.commit()
 conn.close()
+```
+
+#### Prepared statement
+```python
+data = ('title', '2015-01-01')
+datas = [data, ]
+query = "INSERT INTO table (title, date) VALUES (?, ?)"
+cursor.execute(query, data)
+cursor.executemany(query, datas)
 ```
 
 ### Querying database
 * create connection using `connect()`
 * create cursor by `cursor()`
 * pass query by `execute()`
+* get result by `fetchone` or `fetchall`
 
 ```python
 query = "SELECT * FROM table ..."
-c = conn.cursor()
-c.execute(query)
+cursor = conn.cursor()
+cursor.execute(query)
+cursor.fetchone()   # return tuple (according to row)
+cursor.fetchall()   # return list of tuple
 ```
 
 #### Exercises
@@ -1357,6 +1457,7 @@ np.array(42)
 * 1-D array
 ```python
 np.array([1, 2, 3, 4])
+np.arange(4)    # array([0, 1, 2, 3])
 ```
 * 2-D array - matrice
 ```python
